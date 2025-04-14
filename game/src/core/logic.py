@@ -17,3 +17,21 @@ class NeighbourCalculator:
                 if (dx, dy) == (0, 0):
                     continue
                 yield dx, dy
+
+
+class StateCalculator:
+    def calculate(self, current_state: bool, neighbour_states: Iterable[bool]):
+        n_alive = sum(neighbour_states)
+
+        if not current_state:
+            if n_alive == 3:
+                return True
+            else:
+                return False
+
+        if n_alive < 2:
+            return False
+        elif n_alive in (2, 3):
+            return True
+        else:
+            return False
