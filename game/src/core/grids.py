@@ -13,7 +13,7 @@ class Cell(NamedTuple):
 
 class Grid:
     """
-    Cell container. Cells access by coordinate tuple (x,y).
+    Cell container. Cells accessed by coordinate tuple (x,y).
     Unset coordinates return a dead Cell
     """
 

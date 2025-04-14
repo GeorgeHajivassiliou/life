@@ -16,11 +16,6 @@ class TestGrid:
         assert observed == expected
 
     def test_get_items(self, grid):
-        expected = [
-            ((0, 0), False),
-            ((0, 1), True),
-            ((1, 0), False),
-            ((1, 1), False),
-        ]
+        expected = [((0, 0), False), ((0, 1), True), ((1, 0), False), ((1, 1), False)]
         observed = [((c[0]), c[1].value) for c in grid.items()]
         assert observed == expected
