@@ -114,3 +114,44 @@ class TestStateCalculator:
         current_state, neighbour_states = provided
         observed = state_calculator.calculate(current_state, neighbour_states)
         assert observed == expected
+
+
+class TestGame:
+    _TEST_CASES = [
+        pytest.param(
+            {
+                "alive_cells": [(2, 0), (2, 1), (2, 2)],
+                "expected": [False] * 3 + [False, True, False] + [False, True, False],
+            }
+        ),
+        pytest.param({"alive_cells": [], "expected": [False] * 9}),
+        pytest.param({"alive_cells": [(1, 1)], "expected": [False] * 9}),
+    ]
+
+    @pytest.fixture(params=_TEST_CASES)
+    def test_case(self, request):
+        return request.param
+
+    @pytest.fixture()
+    def alive_cells(self, test_case):
+        return test_case["alive_cells"]
+
+    @pytest.fixture
+    def grid(self, alive_cells):
+        grid = grids.Grid((3, 3))
+        for coordinates in alive_cells:
+            cell = grids.Cell(grids.Coordinates(*coordinates), True)
+            grid.set(cell)
+
+        return grid
+
+    @pytest.fixture
+    def expected(self, test_case):
+        return test_case["expected"]
+
+    def test_update(self, grid, expected):
+        game = logic.Game(grid)
+        game.update()
+        updated_grid = game.get_grid()
+        observed = [cell.value for cell in updated_grid.values()]
+        assert observed == expected
