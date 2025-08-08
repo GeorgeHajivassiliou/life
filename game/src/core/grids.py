@@ -41,8 +41,8 @@ class Grid:
             yield self.get(coordinates)
 
     def keys(self) -> Iterable[Coordinates]:
-        for x in range(self._dimensions[0]):
-            for y in range(self._dimensions[1]):
+        for y in range(self._dimensions[1]):
+            for x in range(self._dimensions[0]):
                 result = Coordinates(x, y)
                 yield result
 
