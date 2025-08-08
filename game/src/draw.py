@@ -29,6 +29,14 @@ class Canvas:
         assert self._screen is not None, "Screen cannot be None at this stage"
         pygame.draw.rect(self._screen, self._rect_colour, [x, transformed_y, a, a])
 
+    def erase_square(self, x: int, y: int, a: int = 20):
+        transformed_y = (
+            self._height - y - a
+        )  # so that origin os on the bottom left of the screen and
+        #  the square coordinated point to the bottom left of the square
+        assert self._screen is not None, "Screen cannot be None at this stage"
+        pygame.draw.rect(self._screen, self._background, [x, transformed_y, a, a])
+
     def update(self):
         pygame.display.flip()
 
