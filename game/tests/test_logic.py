@@ -1,4 +1,5 @@
 import pytest
+import itertools
 from game.src.core import logic
 from game.src.core import grids
 
@@ -116,16 +117,50 @@ class TestStateCalculator:
         assert observed == expected
 
 
+def _sparse_to_dense(matrix: list[list[bool]]):
+    for y in range(len(matrix)):
+        for x in range(len(matrix[y])):
+            value = matrix[y][x]
+            if value:
+                yield (x, y)
+
+
 class TestGame:
     _TEST_CASES = [
         pytest.param(
             {
-                "alive_cells": [(2, 0), (2, 1), (2, 2)],
-                "expected": [False] * 3 + [False, True, False] + [False, True, False],
+                "alive_cells": [
+                    [False, False, True],
+                    [False, False, True],
+                    [False, False, True],
+                ],
+                "expected": [
+                    [False] * 3,
+                    [False, True, False],
+                    [False, True, False],
+                ],
             }
         ),
-        pytest.param({"alive_cells": [], "expected": [False] * 9}),
-        pytest.param({"alive_cells": [(1, 1)], "expected": [False] * 9}),
+        pytest.param(
+            {
+                "alive_cells": [
+                    [False, False, False],
+                    [False, False, False],
+                    [False, False, False],
+                ],
+                "expected": [[False] * 3] * 3,
+            }
+        ),
+        pytest.param(
+            {
+                "alive_cells": [
+                    [False, False, False],
+                    [False, True, False],
+                    [False, False, False],
+                ],
+                "expected": [[False] * 3] * 3,
+            }
+        ),
     ]
 
     @pytest.fixture(params=_TEST_CASES)
@@ -134,10 +169,13 @@ class TestGame:
 
     @pytest.fixture()
     def alive_cells(self, test_case):
-        return test_case["alive_cells"]
+        sparse = test_case["alive_cells"]
+        result = list(_sparse_to_dense(sparse))
+        print(list(result))
+        return result
 
     @pytest.fixture
-    def grid(self, alive_cells):
+    def grid(self, test_case, alive_cells):
         grid = grids.Grid((3, 3))
         for coordinates in alive_cells:
             cell = grids.Cell(grids.Coordinates(*coordinates), True)
@@ -147,7 +185,9 @@ class TestGame:
 
     @pytest.fixture
     def expected(self, test_case):
-        return test_case["expected"]
+        matrix = test_case["expected"]
+        result = list(itertools.chain(*matrix))
+        return result
 
     def test_update(self, grid, expected):
         game = logic.Game(grid)
