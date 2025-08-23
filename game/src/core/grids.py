@@ -46,8 +46,24 @@ class Grid:
                 result = Coordinates(x, y)
                 yield result
 
+    @property
+    def dimensions(self):
+        return self._dimensions
+
     def _cast_coordinates(self, coordinates: Coordinates | tuple):
         if isinstance(coordinates, tuple):
             coordinates = Coordinates(*coordinates)
 
         return coordinates
+
+    def __eq__(self, other):
+        assert isinstance(other, Grid), "Grid can only be compared to grid"
+        pairs = {a[0]: a == b for a, b in zip(self.items(), other.items())}
+        if all(pairs.values()):
+            return True
+        else:
+            mismatches = [
+                coordinates for coordinates, match in pairs.items() if not match
+            ]
+            print(f"Mismatch in the following coordinates: {mismatches}")
+            return False
