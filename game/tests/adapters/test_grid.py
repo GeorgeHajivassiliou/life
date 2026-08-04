@@ -1,6 +1,7 @@
 import pytest
-from game.src.core import grids
+
 from game.src.adapters import grid
+from game.src.core import grids
 
 
 @pytest.fixture
