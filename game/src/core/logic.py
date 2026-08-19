@@ -1,4 +1,5 @@
-from typing import Iterable
+from collections.abc import Iterable
+
 from game.src.core import grids
 
 
@@ -21,22 +22,23 @@ class NeighbourCalculator:
 
 class StateCalculator:
     def calculate(self, alive: bool, neighbour_values: Iterable[bool]):
-        assert len(list(neighbour_values)) == 8, "each cell has 8 neighbours"
+        if len(list(neighbour_values)) != 8:
+            raise ValueError("each cell has 8 neighbours")
 
-        n_alive = sum(neighbour_values)
+        alive_neightbours = sum(neighbour_values)
 
-        if not alive:
-            if n_alive == 3:
-                return True
-            else:
-                return False
-
-        if n_alive < 2:
-            return False
-        elif n_alive in (2, 3):
-            return True
+        if alive:
+            state = self._stay_alive(alive_neightbours)
         else:
-            return False
+            state = self._come_alive(alive_neightbours)
+
+        return state
+
+    def _stay_alive(self, alive_neightbours):
+        return alive_neightbours in (2, 3)
+
+    def _come_alive(self, alive_neightbours):
+        return alive_neightbours == 3
 
 
 class Game:
