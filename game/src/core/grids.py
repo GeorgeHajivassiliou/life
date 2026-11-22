@@ -59,7 +59,11 @@ class Grid:
 
     def __eq__(self, other):
         assert isinstance(other, Grid), "Grid can only be compared to grid"
-        pairs = {a[0]: a == b for a, b in zip(self.items(), other.items())}
+        if self.dimensions != other.dimensions:
+            print(f"Mismatch in dimensions: {self.dimensions} != {other.dimensions}")
+            return False
+
+        pairs = {a[0]: a == b for a, b in zip(self.items(), other.items(), strict=True)}
         if all(pairs.values()):
             return True
         else:
