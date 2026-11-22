@@ -1,13 +1,14 @@
-import pytest
 import itertools
-from typing import Iterable
-from game.src.core import logic
-from game.src.core import grids
+from collections.abc import Iterable
+
+import pytest
+
+from game.src.core import grids, logic
 
 
 class TestNeighbourCalculator:
     _base_coordinates = (0, 0)
-    _base_neighbours = [
+    _base_neighbours = (
         (-1, -1),
         (-1, 0),
         (-1, 1),
@@ -16,13 +17,13 @@ class TestNeighbourCalculator:
         (1, 1),
         (1, 0),
         (1, -1),
-    ]
+    )
 
-    _TEST_CASES = [
+    _TEST_CASES = (
         pytest.param({"src_cell": (0, 0)}),
         pytest.param({"src_cell": (5, 7)}),
         pytest.param({"src_cell": (-10, 1)}),
-    ]
+    )
 
     @pytest.fixture(params=_TEST_CASES)
     def test_case(self, request):
@@ -50,7 +51,7 @@ class TestNeighbourCalculator:
 
 
 class TestStateCalculator:
-    _TEST_CASES = [
+    _TEST_CASES = (
         pytest.param(
             {
                 "neighbour_states": [False] * 8,
@@ -93,7 +94,7 @@ class TestStateCalculator:
                 "new_state": False,
             }
         ),
-    ]
+    )
 
     @pytest.fixture(params=_TEST_CASES)
     def test_case(self, request):
@@ -136,7 +137,7 @@ def _make_grid(alive_cells: Iterable[tuple]):
 
 
 class TestGame:
-    _TEST_CASES = [
+    _TEST_CASES = (
         pytest.param(
             {
                 "alive_cells": [
@@ -185,7 +186,7 @@ class TestGame:
                 ],
             }
         ),
-    ]
+    )
 
     @pytest.fixture(params=_TEST_CASES)
     def test_case(self, request):

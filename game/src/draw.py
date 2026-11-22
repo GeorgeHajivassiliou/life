@@ -2,7 +2,7 @@ import pygame
 
 
 class Canvas:
-    __slots__ = ("_width", "_height", "_background", "_rect_colour", "_screen")
+    __slots__ = ("_background", "_height", "_rect_colour", "_screen", "_width")
 
     def __init__(
         self,

@@ -1,5 +1,5 @@
-from game.src.core import grids
 from game.src import draw
+from game.src.core import grids
 
 
 class Ploter:
