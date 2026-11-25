@@ -24,10 +24,7 @@ class Grid:
 
     def get(self, cell_coordinates: Coordinates | tuple) -> Cell:
         cell_coordinates = self._cast_coordinates(cell_coordinates)
-        if cell_coordinates not in self.__store:
-            self.__store[cell_coordinates] = Cell(cell_coordinates, False)
-
-        result = self.__store[cell_coordinates]
+        result = self.__store.get(cell_coordinates, Cell(cell_coordinates, False))
         return result
 
     def set(self, cell: Cell):
