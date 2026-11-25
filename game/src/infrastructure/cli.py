@@ -26,8 +26,8 @@ if __name__ == "__main__":
     plotter.plot(gd)
     _ = pygame.event.get()
     game = logic.Game(gd)
-
-    while True:
+    running = True
+    while running:
         time.sleep(0.1)
         game.update()
         updated_grid = game.get_grid()
@@ -36,4 +36,5 @@ if __name__ == "__main__":
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                pygame.quit()
+                running = False
+    pygame.quit()
