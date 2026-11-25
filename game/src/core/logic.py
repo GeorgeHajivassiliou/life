@@ -21,20 +21,20 @@ class _NeighbourCalculator:
 
 
 class _StateCalculator:
-    def calculate(self, alive: bool, alive_neightbours: int):
+    def calculate(self, alive: bool, alive_neighbours: int):
 
         if alive:
-            state = self._stay_alive(alive_neightbours)
+            state = self._stay_alive(alive_neighbours)
         else:
-            state = self._come_alive(alive_neightbours)
+            state = self._come_alive(alive_neighbours)
 
         return state
 
-    def _stay_alive(self, alive_neightbours):
-        return alive_neightbours in (2, 3)
+    def _stay_alive(self, alive_neighbours):
+        return alive_neighbours in (2, 3)
 
-    def _come_alive(self, alive_neightbours):
-        return alive_neightbours == 3
+    def _come_alive(self, alive_neighbours):
+        return alive_neighbours == 3
 
 
 class Game:
@@ -59,8 +59,8 @@ class Game:
 
     def _update_cell(self, cell: grids.Cell) -> grids.Cell:
         neighbour_coordinates = _NeighbourCalculator().calculate(cell.coordinates)
-        alive_neightbours = self._count_alive_neighbours(neighbour_coordinates)
-        new_value = _StateCalculator().calculate(cell.value, alive_neightbours)
+        alive_neighbours = self._count_alive_neighbours(neighbour_coordinates)
+        new_value = _StateCalculator().calculate(cell.value, alive_neighbours)
         updated_cell = grids.Cell(cell.coordinates, new_value)
         return updated_cell
 
