@@ -3,7 +3,7 @@ from collections.abc import Iterable
 from game.src.core import grids
 
 
-class NeighbourCalculator:
+class _NeighbourCalculator:
     def calculate(
         self,
         src: grids.Coordinates,
@@ -20,12 +20,8 @@ class NeighbourCalculator:
                 yield dx, dy
 
 
-class StateCalculator:
-    def calculate(self, alive: bool, neighbour_values: Iterable[bool]):
-        if len(list(neighbour_values)) != 8:
-            raise ValueError("each cell has 8 neighbours")
-
-        alive_neightbours = sum(neighbour_values)
+class _StateCalculator:
+    def calculate(self, alive: bool, alive_neightbours: int):
 
         if alive:
             state = self._stay_alive(alive_neightbours)
@@ -62,19 +58,18 @@ class Game:
             self._grid.set(cell)
 
     def _update_cell(self, cell: grids.Cell) -> grids.Cell:
-        neighbour_coordinates = NeighbourCalculator().calculate(cell.coordinates)
-        neighbour_values = self._get_neighbour_values(neighbour_coordinates)
-        new_value = StateCalculator().calculate(cell.value, neighbour_values)
+        neighbour_coordinates = _NeighbourCalculator().calculate(cell.coordinates)
+        alive_neightbours = self._count_alive_neighbours(neighbour_coordinates)
+        new_value = _StateCalculator().calculate(cell.value, alive_neightbours)
         updated_cell = grids.Cell(cell.coordinates, new_value)
         return updated_cell
 
-    def _get_neighbour_values(
+    def _count_alive_neighbours(
         self, neighbour_coordinates: Iterable[grids.Coordinates]
-    ) -> list[bool]:
-        result = []
-        for neighbour in neighbour_coordinates:
-            n = self._grid.get(neighbour)
-            result.append(n.value)
+    ) -> int:
+
+        neighbours = [self._grid.get(neighbour) for neighbour in neighbour_coordinates]
+        result = sum(neighbour.value for neighbour in neighbours)
         return result
 
     def get_grid(self) -> grids.Grid:
