@@ -51,7 +51,7 @@ class Grid:
     def dimensions(self):
         return self._dimensions
 
-    def _cast_coordinates(self, coordinates: Coordinates | tuple):
+    def _cast_coordinates(self, coordinates: Coordinates | tuple) -> Coordinates:
         if isinstance(coordinates, tuple):
             coordinates = Coordinates(*coordinates)
 
