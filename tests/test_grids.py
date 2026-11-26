@@ -2,7 +2,7 @@ import copy
 
 import pytest
 
-from game.core import grids
+from life.core import grids
 
 
 class TestGrid:

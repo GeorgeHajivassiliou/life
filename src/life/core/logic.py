@@ -1,6 +1,6 @@
 from collections.abc import Iterable
 
-from game.core import grids
+from life.core import grids
 
 
 class _NeighbourCalculator:

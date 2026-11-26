@@ -1,6 +1,6 @@
 from typing import NamedTuple
 
-from game.core import grids
+from life.core import grids
 
 PositiveCoordinates = list[grids.Coordinates]
 

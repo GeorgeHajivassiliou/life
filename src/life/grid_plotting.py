@@ -1,5 +1,5 @@
-from game import draw
-from game.core import grids
+from life import draw
+from life.core import grids
 
 
 class Plotter:
