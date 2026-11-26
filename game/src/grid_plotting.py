@@ -15,7 +15,7 @@ class Plotter:
         square_x = cell.coordinates.x * self._grid_spacing
         square_y = cell.coordinates.y * self._grid_spacing
         if cell.value:
-            self._canvas.draw_square(square_x, square_y, self._grid_spacing)
+            self._canvas.add_square(square_x, square_y, self._grid_spacing)
         else:
             self._canvas.erase_square(square_x, square_y, self._grid_spacing)
 

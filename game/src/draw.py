@@ -1,5 +1,7 @@
 import pygame
 
+Colour = tuple[int, int, int]
+
 
 class Canvas:
     __slots__ = ("_background", "_height", "_rect_colour", "_screen", "_width")
@@ -8,8 +10,8 @@ class Canvas:
         self,
         width: int,
         height: int,
-        background_colour: tuple[int, int, int] = (0, 0, 0),
-        rect_colour=(200, 100, 100),
+        background_colour: Colour = (0, 0, 0),
+        rect_colour: Colour = (200, 100, 100),
     ):
         self._width = width
         self._height = height
@@ -21,21 +23,19 @@ class Canvas:
         self._screen = pygame.display.set_mode((self._width, self._height))
         self._screen.fill(self._background)
 
-    def draw_square(self, x: int, y: int, a: int = 20):
-        transformed_y = (
-            self._height - y - a
-        )  # so that origin os on the bottom left of the screen and
-        #  the square coordinated point to the bottom left of the square
-        assert self._screen is not None, "Screen cannot be None at this stage"
-        pygame.draw.rect(self._screen, self._rect_colour, [x, transformed_y, a, a])
+    def add_square(self, x: int, y: int, a: int = 20):
+        self._draw_square(x, y, a, self._rect_colour)
 
     def erase_square(self, x: int, y: int, a: int = 20):
+        self._draw_square(x, y, a, self._background)
+
+    def _draw_square(self, x: int, y: int, a: int, colour: Colour):
         transformed_y = (
             self._height - y - a
-        )  # so that origin os on the bottom left of the screen and
-        #  the square coordinated point to the bottom left of the square
+        )  # so that origin is on the bottom left of the screen and
+        #  the square coordinates point to the bottom left of the square
         assert self._screen is not None, "Screen cannot be None at this stage"
-        pygame.draw.rect(self._screen, self._background, [x, transformed_y, a, a])
+        pygame.draw.rect(self._screen, colour, [x, transformed_y, a, a])
 
     def update(self):
         pygame.display.flip()
@@ -52,7 +52,7 @@ def hang_until_quit_event():
 def draw_n_squares(n):
     a = 20
     for i in range(n):
-        cv.draw_square(i * a, i * a, a)
+        cv.add_square(i * a, i * a, a)
 
 
 if __name__ == "__main__":
