@@ -41,26 +41,25 @@ class Canvas:
         pygame.display.flip()
 
 
-def hang_until_quit_event():
-    quit = False
-    while not quit:
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                quit = True
-
-
-def draw_n_squares(n):
-    a = 20
-    for i in range(n):
-        cv.add_square(i * a, i * a, a)
-
-
 if __name__ == "__main__":
+
+    def _hang_until_quit_event():
+        running = True
+        while running:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    running = False
+
+    def _draw_n_squares(n):
+        a = 20
+        for i in range(n):
+            cv.add_square(i * a, i * a, a)
+
     total_x = 800
     total_y = 400
     cv = Canvas(total_x, total_y)
     cv.make()
-    draw_n_squares(n=15)
+    _draw_n_squares(n=15)
     cv.update()
-    hang_until_quit_event()
+    _hang_until_quit_event()
     pygame.quit()
