@@ -17,8 +17,8 @@ def serialise(grid: grids.Grid) -> SerialisedGrid:
 
 
 def deserialise(serialised_grid: SerialisedGrid) -> grids.Grid:
-    result = grids.Grid(serialised_grid[1])
-    for coordinates in serialised_grid[0]:
+    result = grids.Grid(serialised_grid.dimensions)
+    for coordinates in serialised_grid.positive_coordinates:
         result.set(grids.Cell(coordinates, True))
 
     return result
