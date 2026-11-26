@@ -22,7 +22,7 @@ if __name__ == "__main__":
     ]:
         cell = grids.Cell(grids.Coordinates(*c), True)
         gd.set(cell)
-    plotter = grid_plotting.Ploter(cv, 20)
+    plotter = grid_plotting.Plotter(cv, 20)
     plotter.plot(gd)
     _ = pygame.event.get()
     game = logic.Game(gd)

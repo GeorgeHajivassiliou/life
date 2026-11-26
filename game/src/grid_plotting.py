@@ -2,7 +2,7 @@ from game.src import draw
 from game.src.core import grids
 
 
-class Ploter:
+class Plotter:
     def __init__(self, canvas: draw.Canvas, grid_spacing: int = 20):
         self._grid_spacing = grid_spacing
         self._canvas = canvas
