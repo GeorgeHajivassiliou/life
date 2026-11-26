@@ -55,17 +55,10 @@ class Grid:
         return coordinates
 
     def __eq__(self, other):
-        assert isinstance(other, Grid), "Grid can only be compared to grid"
+        if not isinstance(other, Grid):
+            return NotImplemented
+
         if self.dimensions != other.dimensions:
-            print(f"Mismatch in dimensions: {self.dimensions} != {other.dimensions}")
             return False
 
-        pairs = {a[0]: a == b for a, b in zip(self.items(), other.items(), strict=True)}
-        if all(pairs.values()):
-            return True
-        else:
-            mismatches = [
-                coordinates for coordinates, match in pairs.items() if not match
-            ]
-            print(f"Mismatch in the following coordinates: {mismatches}")
-            return False
+        return all(a == b for a, b in zip(self.items(), other.items(), strict=True))

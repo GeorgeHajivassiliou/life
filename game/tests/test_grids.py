@@ -1,3 +1,5 @@
+import copy
+
 import pytest
 
 from game.src.core import grids
@@ -20,3 +22,8 @@ class TestGrid:
         expected = [((0, 0), False), ((1, 0), False), ((0, 1), True), ((1, 1), False)]
         observed = [((c[0]), c[1].value) for c in grid.items()]
         assert observed == expected
+
+    def test_equality(self, grid):
+        assert grid == copy.deepcopy(grid)
+        assert grid != grids.Grid((2, 2))
+        assert grid != None
