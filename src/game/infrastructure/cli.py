@@ -2,8 +2,8 @@ import time
 
 import pygame
 
-from game.src import draw, grid_plotting
-from game.src.core import grids, logic
+from game import draw, grid_plotting
+from game.core import grids, logic
 
 if __name__ == "__main__":
     total_x = 800

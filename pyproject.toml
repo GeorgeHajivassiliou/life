@@ -14,8 +14,11 @@ dev = [
 ]
 
 [tool.pytest]
-pythonpath = ["."]
-testpaths = ["game/tests"]
+pythonpath = ["src"]
+testpaths = ["tests"]
+
+[tool.mypy]
+mypy_path = "src"
 
 [tool.ruff.lint]
 extend-select = ["I", "B", "UP", "SIM"]

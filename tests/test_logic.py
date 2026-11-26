@@ -3,7 +3,7 @@ from collections.abc import Iterable
 
 import pytest
 
-from game.src.core import grids, logic
+from game.core import grids, logic
 
 
 def _sparse_to_dense(matrix: list[list[bool]]):
